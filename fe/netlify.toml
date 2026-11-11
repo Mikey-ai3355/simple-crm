@@ -1,0 +1,38 @@
+# Netlify config — Next.js 15 server-rendered app.
+#
+# Strategy: build the full Next.js app (NOT standalone — standalone is a
+# long-running server that doesn't fit the serverless-function model), then
+# route every request through a single Netlify Function that delegates to
+# the Next.js request handler.  This gives us SSR + server-side API calls
+# without a long-lived Node process.
+#
+# The `output: 'standalone'` line in next.config.mjs is kept for the
+# Render/Docker fallback path; it does not interfere with this build.
+
+[build]
+  command   = "npm ci --no-audit --no-fund && npm run build"
+  publish   = ".next"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  # Next.js + its deps must stay out of the esbuild bundle (native / CJS).
+  external_node_modules = ["next"]
+
+# Route everything to the Next.js handler.
+[[redirects]]
+  from  = "/*"
+  to    = "/.netlify/functions/next"
+  status = 200
+  force  = true
+
+# Next.js rewrites static assets directly (avoids a function round-trip).
+[[redirects]]
+  from  = "/_next/static/*"
+  to    = "/_next/static/:splat"
+  status = 200
+
+[[redirects]]
+  from  = "/favicon.ico"
+  to    = "/favicon.ico"
+  status = 200

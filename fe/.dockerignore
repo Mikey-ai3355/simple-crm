@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+.git
+.gitignore
+*.log
+npm-debug.log
+.env
+.env.*
+!fe/.env.example
+Dockerfile
+.dockerignore
+netlify.toml
+README.md
+data/db.json

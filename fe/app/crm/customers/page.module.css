@@ -1,0 +1,32 @@
+/* app/crm/customers/page.module.css */
+.list {
+  margin-top: var(--space-4);
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* add to app/crm/customers/page.module.css */
+.btnPrimaryLink {
+  padding: var(--space-2) var(--space-5);
+  background: var(--action-primary);
+  color: var(--text-on-primary);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  transition: background var(--duration-fast) var(--ease-standard);
+}
+
+.btnPrimaryLink:hover {
+  background: var(--action-primary-hover);
+}

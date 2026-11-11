@@ -1,0 +1,8 @@
+target
+*.class
+.git
+.gitignore
+*.log
+.idea
+.vscode
+.mvn/wrapper/*.Zone*
