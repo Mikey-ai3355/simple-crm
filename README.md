@@ -1,4 +1,4 @@
-# Simple CRM — Option 3 (Module 3)
+# Simple CRM — Option 3 (Module 4 stretch goal)
 
 Full-stack customer relationship manager:
 
