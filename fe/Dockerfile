@@ -15,15 +15,19 @@ RUN npm ci --no-audit --no-fund
 
 # Copy source and build (standalone output).
 COPY . .
-# Build-time env so NEXT_PUBLIC_* gets inlined; runtime URL is read server-side
-# from the same variable at request time (see lib/api.js), so either works.
-ENV NEXT_PUBLIC_API_URL=http://localhost:8080
+# NOTE: lib/api.js reads API_BASE_URL at RUNTIME (see the run stage ENV).
+# NEXT_PUBLIC_* values are inlined at build time, so we no longer use one here.
 RUN npm run build
 
 # ---- Run stage ----
 FROM node:22-alpine
 WORKDIR /app
 ENV NODE_ENV=production
+
+# API base URL, read at RUNTIME by lib/api.js (process.env.API_BASE_URL).
+# Baked in as the default so the service works even before/without a Render
+# env var. A Render env var of the same name still overrides this.
+ENV API_BASE_URL=https://simple-crm-api-tquo.onrender.com
 
 # Bring in the standalone server + its minimal node_modules.
 COPY --from=build /app/.next/standalone ./

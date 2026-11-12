@@ -48,7 +48,7 @@ NEXT_PUBLIC_API_URL=http://localhost:8080 npm run dev
 ```
 
 Sign in with the seeded demo accounts: `admin / admin123`,
-`manager / manager123`, or `user / password`.
+`manager / manager123`, or `user / user123`.
 
 ## API surface (summary)
 
@@ -63,4 +63,17 @@ Sign in with the seeded demo accounts: `admin / admin123`,
 - `GET    /customers/{id}/interactions`
 - `POST   /customers/{id}/interactions`
 
-All `/customers/**` require `Authorization: Bearer <token>`.
+All `/customers/**` require `Authorization: Bearer ***
+
+## Live deployment (Option 3)
+
+Built and deployed on Render from Docker Hub images (`mikeyapyc/simple-crm-api`,
+`mikeyapyc/simple-crm-fe`) with a Render Postgres database:
+
+- **Frontend:** https://simple-crm-fe.onrender.com
+- **API:** https://simple-crm-api-tquo.onrender.com/health
+- **Postgres:** Render Postgres instance `dpg-dbq3t5h5efls739jmsj0-a` (database `simple_crm_db_86l3`)
+- **API images:** https://hub.docker.com/r/mikeyapyc/simple-crm-api
+- **FE images:** https://hub.docker.com/r/mikeyapyc/simple-crm-fe
+
+Sign in with the seeded accounts: `admin / admin123`, `manager / manager123`, or `user / user123`.

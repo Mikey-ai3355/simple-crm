@@ -25,7 +25,13 @@ export async function login(_previousState, formData) {
   }
 
   if (!res.ok) {
-    return { error: 'Incorrect username or password.' };
+    if (res.status === 401) {
+      return { error: 'Incorrect username or password.' };
+    }
+    return {
+      error:
+        'Could not reach the CRM API (HTTP ' + res.status + '). The API may still be waking up — please try again in a moment.',
+    };
   }
 
   let token;

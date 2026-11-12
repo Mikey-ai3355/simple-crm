@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import jakarta.servlet.http.HttpServletResponse;
 
 import sg.edu.ntu.simple_crm.security.JwtAuthFilter;
 
@@ -47,7 +48,14 @@ public class SecurityConfig {
             )
 
             // Register JWT filter to run before username/password authentication
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+
+            // Return 401 (not the default 403) for requests with no/invalid token,
+            // so the SPA can redirect to the login screen.
+            .exceptionHandling(ex -> ex
+                .authenticationEntryPoint((req, res, aex) ->
+                    res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication required"))
+            );
 
         return http.build();
     }
